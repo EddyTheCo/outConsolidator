@@ -85,6 +85,13 @@ qt_add_executable(outConsolidator  outConsolidator.cpp)
 # Link the used libraies in the executable
 target_link_libraries(outConsolidator PRIVATE qclient qaddr_bundle qslip10 qed25519 qclientMQTT)
 
+qt_generate_deploy_app_script(
+    TARGET outConsolidator
+    OUTPUT_SCRIPT deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
+)
+install(SCRIPT ${deploy_script})
+
 # Install the different targets
 install(TARGETS outConsolidator DESTINATION ${CMAKE_INSTALL_BINDIR})
 # Coppy the DLLs in Windows
