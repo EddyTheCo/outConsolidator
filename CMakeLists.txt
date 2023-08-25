@@ -85,10 +85,6 @@ qt_add_executable(outConsolidator  outConsolidator.cpp)
 # Link the used libraies in the executable
 target_link_libraries(outConsolidator PRIVATE qclient qaddr_bundle qslip10 qed25519 qclientMQTT)
 
-set_target_properties(outConsolidator PROPERTIES
-	WIN32_EXECUTABLE ON
-	MACOSX_BUNDLE ON
-	)
 
 qt_generate_deploy_app_script(
     TARGET outConsolidator
