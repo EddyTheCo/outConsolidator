@@ -98,7 +98,9 @@ qt_generate_deploy_app_script(
 install(SCRIPT ${deploy_script})
 
 # Install the different targets
-install(TARGETS outConsolidator DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS outConsolidator 
+	BUNDLE  DESTINATION . 
+	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 # Coppy the DLLs in Windows
 if (WIN32 AND BUILD_SHARED_LIBS)
     add_custom_command(
