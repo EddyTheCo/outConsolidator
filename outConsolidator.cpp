@@ -67,7 +67,6 @@ int main(int argc, char** argv)
         auto keysCons=MK.slip10_key_from_path(pathCons);
         auto keysDust=MK.slip10_key_from_path(pathDust);
 
-
         auto iota_client=new Client(&a);
 
         iota_client->set_node_address(QUrl(argv[4]));
@@ -124,8 +123,10 @@ int main(int argc, char** argv)
                                     if(dust_bundle.amount+cons_bundle.amount>=minDeposit)
                                     {
                                         pvector<const Output> the_outputs_;
+                                        cons_bundle.add_tokens(dust_bundle.native_tokens);
                                         auto ConsOut= Output::Basic(dust_bundle.amount+cons_bundle.amount,
-                                                                    {conUnlCon},{},{});
+                                                                    {conUnlCon},cons_bundle.get_tokens(),{});
+
                                         auto RecPair= decode(readdress);
                                         if(RecPair.second.size()&&RecPair.first==info->bech32Hrp&&
                                                 dust_bundle.amount+cons_bundle.amount>=2*minDeposit)
@@ -133,7 +134,8 @@ int main(int argc, char** argv)
                                             ConsOut->amount_=minDeposit;
                                             const auto RecUnlCon=Unlock_Condition::Address(Address::from_array(RecPair.second));
                                             auto RecOut= Output::Basic(dust_bundle.amount+cons_bundle.amount-minDeposit,
-                                                                       {RecUnlCon},{},{});
+                                                                       {RecUnlCon},cons_bundle.get_tokens(),{});
+                                            ConsOut->native_tokens_={};
                                             the_outputs_.push_back(RecOut);
                                         }
                                         the_outputs_.push_back(ConsOut);
