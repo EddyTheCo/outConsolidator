@@ -95,21 +95,20 @@ install(TARGETS outConsolidator
 	BUNDLE  DESTINATION .
 	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
-qt_generate_deploy_app_script(
+qt_generate_deploy_qml_app_script(
     TARGET outConsolidator
     OUTPUT_SCRIPT deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
 )
 
 install(SCRIPT ${deploy_script})
 # Coppy the DLLs in Windows
-if (WIN32 AND BUILD_SHARED_LIBS)
-    add_custom_command(
-        TARGET outConsolidator POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_RUNTIME_DLLS:outConsolidator> $<TARGET_FILE_DIR:outConsolidator>
-        COMMAND_EXPAND_LISTS
-    )
-endif ()
+#if (WIN32 AND BUILD_SHARED_LIBS)
+#    add_custom_command(
+#        TARGET outConsolidator POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_RUNTIME_DLLS:outConsolidator> $<TARGET_FILE_DIR:outConsolidator>
+#        COMMAND_EXPAND_LISTS
+#    )
+#endif ()
 
 # Prepare Cpack to package the executables, headers and libraries 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
